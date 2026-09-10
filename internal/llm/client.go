@@ -9,7 +9,12 @@ import (
 	"os"
 )
 
-const defaultEndpoint = "https://api.openai.com/v1/chat/completions"
+const (
+	defaultOpenAIEndpoint = "https://api.openai.com/v1/chat/completions"
+	defaultOpenRouterEndpoint = "https://openrouter.ai/api/v1/chat/completions"
+	defaultModel = "gpt-4o-mini"
+	openRouterModel = "openai/gpt-4o-mini"
+)
 
 type Message struct {
 	Role    string `json:"role"`
@@ -30,30 +35,60 @@ type Response struct {
 }
 
 type Client struct {
-	APIKey   string
-	Model    string
-	Endpoint string
+	APIKey       string
+	Model        string
+	Endpoint     string
+	IsOpenRouter bool
 }
 
 func NewClient() *Client {
-	key := os.Getenv("OPENAI_API_KEY")
+	// 1. Check OPENROUTER_API_KEY first
+	key := os.Getenv("OPENROUTER_API_KEY")
+	isOpenRouter := key != ""
+	
+	if isOpenRouter {
+		// Use OpenRouter defaults
+		model := os.Getenv("STYLE_ENGINE_MODEL")
+		if model == "" {
+			model = openRouterModel
+		}
+		endpoint := os.Getenv("STYLE_ENGINE_ENDPOINT")
+		if endpoint == "" {
+			endpoint = defaultOpenRouterEndpoint
+		}
+		return &Client{
+			APIKey:       key,
+			Model:        model,
+			Endpoint:     endpoint,
+			IsOpenRouter: true,
+		}
+	}
+
+	// 2. Fall back to OPENAI_API_KEY
+	key = os.Getenv("OPENAI_API_KEY")
 	if key == "" {
 		key = os.Getenv("STYLE_ENGINE_API_KEY")
 	}
+
 	model := os.Getenv("STYLE_ENGINE_MODEL")
 	if model == "" {
-		model = "gpt-4o-mini"
+		model = defaultModel
 	}
 	endpoint := os.Getenv("STYLE_ENGINE_ENDPOINT")
 	if endpoint == "" {
-		endpoint = defaultEndpoint
+		endpoint = defaultOpenAIEndpoint
 	}
-	return &Client{APIKey: key, Model: model, Endpoint: endpoint}
+	return &Client{
+		APIKey:       key,
+		Model:        model,
+		Endpoint:     endpoint,
+		IsOpenRouter: false,
+	}
 }
 
 func (c *Client) Transform(systemPrompt, userPrompt string) (string, error) {
 	if c.APIKey == "" {
-		return "", fmt.Errorf("no API key set - export OPENAI_API_KEY or STYLE_ENGINE_API_KEY")
+		return "", fmt.Errorf("no API key set - export OPENROUTER_API_KEY, OPENAI_API_KEY, or STYLE_ENGINE_API_KEY")
 	}
 
 	reqBody := Request{
@@ -75,6 +110,11 @@ func (c *Client) Transform(systemPrompt, userPrompt string) (string, error) {
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
 	httpReq.Header.Set("Authorization", "Bearer "+c.APIKey)
+
+	if c.IsOpenRouter {
+		httpReq.Header.Set("HTTP-Referer", "https://style-engine.local")
+		httpReq.Header.Set("X-Title", "Style Engine")
+	}
 
 	resp, err := http.DefaultClient.Do(httpReq)
 	if err != nil {
