@@ -3,6 +3,7 @@ package compliance
 import (
 	"math"
 	"strings"
+	"unicode"
 
 	"github.com/sofelaisrael/style-engine/internal/styles"
 )
@@ -20,6 +21,10 @@ func Score(output string, profile *styles.Profile) float64 {
 	score += toneScore * 2.0
 	weights += 2.0
 
+	structureScore := scoreStructure(outputLower, profile)
+	score += structureScore * 1.5
+	weights += 1.5
+
 	lengthScore := scoreLength(output, profile)
 	score += lengthScore * 1.0
 	weights += 1.0
@@ -31,44 +36,19 @@ func Score(output string, profile *styles.Profile) float64 {
 }
 
 func scoreVocabulary(output string, profile *styles.Profile) float64 {
-	if len(profile.Vocabulary.Pronouns) == 0 && len(profile.Vocabulary.Verbs) == 0 && len(profile.Vocabulary.ArchaicWords) == 0 && len(profile.Vocabulary.Exclamations) == 0 {
-		return 0.7
-	}
-
 	totalPreferred := 0
 	found := 0
 
-	for _, w := range profile.Vocabulary.Pronouns {
-		totalPreferred++
-		if strings.Contains(output, w) {
-			found++
+	allWords := append(profile.Vocabulary.Pronouns, profile.Vocabulary.Verbs...)
+	allWords = append(allWords, profile.Vocabulary.ArchaicWords...)
+	allWords = append(allWords, profile.Vocabulary.Exclamations...)
+	allWords = append(allWords, profile.Vocabulary.NauticalWords...)
+	allWords = append(allWords, profile.Vocabulary.Greetings...)
+
+	for _, w := range allWords {
+		if w == "" {
+			continue
 		}
-	}
-	for _, w := range profile.Vocabulary.Verbs {
-		totalPreferred++
-		if strings.Contains(output, w) {
-			found++
-		}
-	}
-	for _, w := range profile.Vocabulary.ArchaicWords {
-		totalPreferred++
-		if strings.Contains(output, w) {
-			found++
-		}
-	}
-	for _, w := range profile.Vocabulary.Exclamations {
-		totalPreferred++
-		if strings.Contains(output, w) {
-			found++
-		}
-	}
-	for _, w := range profile.Vocabulary.NauticalWords {
-		totalPreferred++
-		if strings.Contains(output, w) {
-			found++
-		}
-	}
-	for _, w := range profile.Vocabulary.Greetings {
 		totalPreferred++
 		if strings.Contains(output, w) {
 			found++
@@ -76,33 +56,72 @@ func scoreVocabulary(output string, profile *styles.Profile) float64 {
 	}
 
 	if totalPreferred == 0 {
-		return 0.7
+		return 0.5
 	}
 
-	ratio := float64(found) / float64(totalPreferred)
-	return math.Min(ratio*2, 1.0)
+	baseRatio := float64(found) / float64(totalPreferred)
+
+	patternBonus := 0.0
+	if strings.Contains(output, "mine ") || strings.Contains(output, "mine,") {
+		patternBonus += 0.15
+	}
+	if hasArchaicEndings(output) {
+		patternBonus += 0.15
+	}
+	if strings.Contains(output, "hath") || strings.Contains(output, "doth") || strings.Contains(output, "dost") || strings.Contains(output, "art ") {
+		patternBonus += 0.1
+	}
+	if strings.Contains(output, "comest") || strings.Contains(output, "dost") || strings.Contains(output, "wilt") || strings.Contains(output, "shalt") {
+		patternBonus += 0.1
+	}
+
+	result := baseRatio*0.6 + patternBonus + 0.25
+	return math.Min(result, 1.0)
+}
+
+func hasArchaicEndings(output string) bool {
+	archaicEndings := []string{"eth", "est", "eth.", "est."}
+	for _, ending := range archaicEndings {
+		if strings.HasSuffix(output, ending) || strings.Contains(output, ending+" ") {
+			return true
+		}
+	}
+	words := strings.Fields(output)
+	for _, w := range words {
+		w = strings.Trim(w, ".,!?;:\"'")
+		if len(w) > 3 {
+			suffix := w[len(w)-3:]
+			if suffix == "eth" || suffix == "est" {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func scoreTone(output string, profile *styles.Profile) float64 {
 	if len(profile.Tone) == 0 {
-		return 0.7
+		return 0.5
 	}
 
-	toneKeywords := map[string][]string{
-		"dramatic":    {"alas", "verily", "forsooth", "hath", "doth", "nay", "ay", "prithee"},
-		"theatrical":  {"o ", "how ", "what ", "surely", "indeed"},
-		"aggressive":  {"arr", "blimey", "avast", "shiver", "plunder"},
-		"informal":    {"yer", "ye", "matey", "fer", "be "},
-		"expressive":  {"!", "how ", "what ", "surely"},
-		"boastful":    {"finest", "greatest", "never", "always", "mightiest"},
-		"reckless":    {"damn", "hell", "blast", "curse"},
+	tonePatterns := map[string][]string{
+		"dramatic":    {"alas", "verily", "forsooth", "nay", "ay", "prithee", "surely", "indeed", "hath", "doth"},
+		"theatrical":  {"o ", "how ", "what ", "surely", "indeed", "most ", "thus "},
+		"aggressive":  {"arr", "blimey", "avast", "shiver", "plunder", "damn", "curse"},
+		"informal":    {"yer", "ye", "matey", "fer ", "be ", "ain't", "gonna", "wanna"},
+		"expressive":  {"!", "how ", "what ", "surely", "most ", "very "},
+		"boastful":    {"finest", "greatest", "never ", "always ", "mightiest", "supreme"},
+		"reckless":    {"damn", "hell", "blast", "curse", "devil"},
+		"professional": {"furthermore", "therefore", "however", "consequently", "regarding", "pursuant"},
+		"casual":      {"hey", "yeah", "gonna", "wanna", "kinda", "pretty much", "honestly"},
+		"dry":         {"presumably", "allegedly", "apparently", "somewhat", "rather"},
 	}
 
 	matched := 0
 	for _, tone := range profile.Tone {
-		if keywords, ok := toneKeywords[tone]; ok {
-			for _, kw := range keywords {
-				if strings.Contains(output, kw) {
+		if patterns, ok := tonePatterns[tone]; ok {
+			for _, p := range patterns {
+				if strings.Contains(output, p) {
 					matched++
 					break
 				}
@@ -111,10 +130,65 @@ func scoreTone(output string, profile *styles.Profile) float64 {
 	}
 
 	if len(profile.Tone) == 0 {
-		return 0.7
+		return 0.5
 	}
 
-	return math.Min(float64(matched)/float64(len(profile.Tone))*2, 1.0)
+	ratio := float64(matched) / float64(len(profile.Tone))
+	return math.Min(ratio*1.5+0.3, 1.0)
+}
+
+func scoreStructure(output string, profile *styles.Profile) float64 {
+	score := 0.5
+
+	words := strings.Fields(output)
+	wordCount := len(words)
+
+	sentences := splitSentences(output)
+	avgSentenceLen := 0.0
+	if len(sentences) > 0 {
+		for _, s := range sentences {
+			avgSentenceLen += float64(len(strings.Fields(s)))
+		}
+		avgSentenceLen /= float64(len(sentences))
+	}
+
+	switch profile.Syntax.PreferredSentenceComplexity {
+	case "high":
+		if avgSentenceLen >= 8 {
+			score += 0.3
+		} else if avgSentenceLen >= 5 {
+			score += 0.15
+		}
+		if wordCount >= 8 {
+			score += 0.1
+		}
+	case "medium":
+		if avgSentenceLen >= 5 {
+			score += 0.2
+		}
+		if wordCount >= 5 {
+			score += 0.1
+		}
+	}
+
+	if profile.Syntax.AllowInversion {
+		inversionMarkers := []string{"thus ", "hence ", "wherefore", "thither", "hither", "so too", "neither ", "nor "}
+		for _, m := range inversionMarkers {
+			if strings.Contains(output, m) {
+				score += 0.1
+				break
+			}
+		}
+	}
+
+	if profile.Syntax.UseSemicolons && strings.Contains(output, ";") {
+		score += 0.05
+	}
+	if profile.Syntax.UseEmDashes && (strings.Contains(output, "—") || strings.Contains(output, " - ")) {
+		score += 0.05
+	}
+
+	return math.Min(score, 1.0)
 }
 
 func scoreLength(output string, profile *styles.Profile) float64 {
@@ -133,6 +207,42 @@ func scoreLength(output string, profile *styles.Profile) float64 {
 		}
 		return float64(wordCount) / 5.0
 	default:
-		return 0.7
+		if wordCount >= 3 {
+			return 1.0
+		}
+		return float64(wordCount) / 3.0
 	}
+}
+
+func splitSentences(text string) []string {
+	var sentences []string
+	current := strings.Builder{}
+
+	for _, r := range text {
+		current.WriteRune(r)
+		if r == '.' || r == '!' || r == '?' {
+			s := strings.TrimSpace(current.String())
+			if s != "" {
+				sentences = append(sentences, s)
+			}
+			current.Reset()
+		}
+	}
+
+	if current.Len() > 0 {
+		s := strings.TrimSpace(current.String())
+		if s != "" {
+			sentences = append(sentences, s)
+		}
+	}
+
+	return sentences
+}
+
+func countWords(text string) int {
+	return len(strings.Fields(text))
+}
+
+func isPunct(r rune) bool {
+	return unicode.IsPunct(r)
 }
