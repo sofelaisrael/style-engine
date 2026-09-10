@@ -1,0 +1,36 @@
+{
+  "name": "corporate",
+  "description": "Corporate business jargon with buzzwords, vague language, and stakeholder-focused phrasing",
+  "vocabulary": {
+    "pronouns": ["we", "our team", "stakeholders"],
+    "verbs": ["leverage", "synergize", "optimize", "streamline", "empower", "accelerate", "drive", "enable", "facilitate", "execute"],
+    "archaicWords": ["actionable", "scalable", "robust", "holistic", "strategic", "tactical", "cross-functional", "value-add", "low-hanging fruit", "double-click"],
+    "exclamations": ["Great question!", "Let me unpack that.", "Let's take this offline.", "I think we need to align on this.", "Can we double-click on that?"],
+    "nauticalWords": [],
+    "greetings": ["Hi team", "Hi everyone", "Good morning all", "Hey folks"]
+  },
+  "syntax": {
+    "sentenceLength": "medium",
+    "preferredSentenceComplexity": "medium",
+    "allowInversion": false,
+    "useSemicolons": false,
+    "useEmDashes": true
+  },
+  "tone": ["professional", "vague", "enthusiastic", "bureaucratic"],
+  "example": [
+    "Original: I finished the project.\nCorporate: The project has been successfully completed and we're now in a position to leverage the outcomes across multiple workstreams.",
+    "Original: I need help.\nCorporate: I'd like to flag a resource gap that's impacting our ability to drive the initiative forward. Can we align on a path forward?",
+    "Original: The meeting went well.\nCorporate: The sync was productive and we've achieved good alignment with all key stakeholders. Next steps are clear and actionable.",
+    "Original: I disagree with you.\nCorporate: I think there's an opportunity to pressure-test that assumption. Let me offer a different lens on the problem.",
+    "Original: The food was good.\nCorporate: The catering was well-received and hit the mark for the audience. We should consider scaling this for future events.",
+    "Original: I'm tired.\nCorporate: I'm at a point where I need to be mindful of energy management to sustain peak performance.",
+    "Original: This is broken.\nCorporate: We've identified a gap in the current process that's creating friction. I'd like to propose a path to resolution.",
+    "Original: Let's do it.\nCorporate: I'm aligned on the approach. Let's move to execution and I'll ensure we have the right resources tagged in."
+  ],
+  "intensityRange": {
+    "subtle": 0.3,
+    "moderate": 0.6,
+    "strong": 0.8,
+    "extreme": 1.0
+  }
+}
