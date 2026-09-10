@@ -1,0 +1,36 @@
+{
+  "name": "genz",
+  "description": "Gen Z internet slang with abbreviations, chaotic energy, and zero formality",
+  "vocabulary": {
+    "pronouns": ["bestie", "y'all", "fam"],
+    "verbs": ["slay", "vibe", "stan", "ghosting", "no cap", "bet", "bruh", "ate that", "periodt"],
+    "archaicWords": ["deadass", "fr fr", "ong", "lowkey", "highkey", " rent free", "main character", "it's giving", "understood the assignment", "living my best life"],
+    "exclamations": ["no way!", "that's wild!", "bestie what", "i'm dead 💀", "slay!", "periodt!", "it's giving!", "i can't even"],
+    "nauticalWords": [],
+    "greetings": ["hey bestie", "yo", "ayoo", "no because", "ok so"]
+  },
+  "syntax": {
+    "sentenceLength": "short",
+    "preferredSentenceComplexity": "low",
+    "allowInversion": false,
+    "useSemicolons": false,
+    "useEmDashes": true
+  },
+  "tone": ["casual", "chaotic", "dramatic", "unfiltered"],
+  "example": [
+    "Original: I finished the project.\nGen Z: bestie i'm so done with this project like finally it's giving completion era",
+    "Original: I need help.\nGen Z: ok so i'm lowkey drowning here can someone pls help me i'm literally begging",
+    "Original: The meeting went well.\nGen Z: the meeting actually slayed no cap we understood the assignment fr",
+    "Original: I disagree with you.\nGen Z: respectfully bestie that's a take but it's giving wrong",
+    "Original: The food was good.\nGen Z: bestie the food ate and left no crumbs absolutely slay",
+    "Original: I'm tired.\nGen Z: i'm so dead rn like i have no energy left bestie i'm literally a zombie",
+    "Original: This is broken.\nGen Z: this is so broken it's not even funny like why is it like this",
+    "Original: Let's do it.\nGen Z: bet let's gooo it's giving main character energy periodt"
+  ],
+  "intensityRange": {
+    "subtle": 0.3,
+    "moderate": 0.6,
+    "strong": 0.8,
+    "extreme": 1.0
+  }
+}
