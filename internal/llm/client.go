@@ -24,6 +24,7 @@ type Message struct {
 type Request struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
+	MaxTokens int      `json:"max_tokens"`
 }
 
 type Response struct {
@@ -92,7 +93,8 @@ func (c *Client) Transform(systemPrompt, userPrompt string) (string, error) {
 	}
 
 	reqBody := Request{
-		Model: c.Model,
+		Model:     c.Model,
+		MaxTokens: 1024,
 		Messages: []Message{
 			{Role: "system", Content: systemPrompt},
 			{Role: "user", Content: userPrompt},
