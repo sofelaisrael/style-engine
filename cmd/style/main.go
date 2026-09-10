@@ -13,17 +13,19 @@ import (
 
 func main() {
 	styleFlag := flag.String("style", "", "Style to apply (e.g. shakespeare, pirate)")
+	intensityFlag := flag.Float64("intensity", 0.7, "Style intensity 0.1-1.0")
 	listFlag := flag.Bool("list", false, "List available styles")
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: style [text] --style <name>\n\n")
+		fmt.Fprintf(os.Stderr, "Usage: style [text] --style <name> [--intensity <0.1-1.0>]\n\n")
 		fmt.Fprintf(os.Stderr, "Transform text using a style profile.\n\n")
 		fmt.Fprintf(os.Stderr, "Options:\n")
-		fmt.Fprintf(os.Stderr, "  --style string    Style to apply\n")
-		fmt.Fprintf(os.Stderr, "  --list            List available styles\n")
-		fmt.Fprintf(os.Stderr, "  --help            Show this help\n\n")
+		fmt.Fprintf(os.Stderr, "  --style string      Style to apply\n")
+		fmt.Fprintf(os.Stderr, "  --intensity float   Style intensity 0.1-1.0 (default 0.7)\n")
+		fmt.Fprintf(os.Stderr, "  --list              List available styles\n")
+		fmt.Fprintf(os.Stderr, "  --help              Show this help\n\n")
 		fmt.Fprintf(os.Stderr, "Examples:\n")
-		fmt.Fprintf(os.Stderr, '  style "I finished the project." --style shakespeare\n')
-		fmt.Fprintf(os.Stderr, '  style "Are you coming?" --style pirate\n')
+		fmt.Fprintf(os.Stderr, "  style \"I finished the project.\" --style shakespeare\n")
+		fmt.Fprintf(os.Stderr, "  style \"Are you coming?\" --style pirate --intensity 0.5\n")
 		fmt.Fprintf(os.Stderr, "  style --list\n")
 	}
 	flag.Parse()
@@ -60,7 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	systemPrompt := prompt.BuildSystemPrompt(profile)
+	systemPrompt := prompt.BuildSystemPrompt(profile, *intensityFlag)
 	userPrompt := prompt.BuildUserPrompt(text)
 
 	client := llm.NewClient()

@@ -88,7 +88,7 @@ func hasArchaicEndings(output string) bool {
 	}
 	words := strings.Fields(output)
 	for _, w := range words {
-		w = strings.Trim(w, ".,!?;:\"'")
+		w = strings.Trim(w, ",.!?;:\"'")
 		if len(w) > 3 {
 			suffix := w[len(w)-3:]
 			if suffix == "eth" || suffix == "est" {
@@ -193,7 +193,7 @@ func scoreStructure(output string, profile *styles.Profile) float64 {
 	if profile.Syntax.UseSemicolons && strings.Contains(output, ";") {
 		score += 0.05
 	}
-	if profile.Syntax.UseEmDashes && (strings.Contains(output, "—") || strings.Contains(output, " - ")) {
+	if profile.Syntax.UseEmDashes && (strings.Contains(output, "\u2014") || strings.Contains(output, " - ")) {
 		score += 0.05
 	}
 

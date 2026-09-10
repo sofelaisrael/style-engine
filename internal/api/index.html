@@ -86,7 +86,7 @@ try{
 const res=await fetch("/transform",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,style:selectedStyle,intensity:intensity.value/100})});
 const data=await res.json();
 if(data.error){resultEl.innerHTML="<span class='error'>"+data.error+"</span>";}else{resultEl.innerHTML="<strong>"+escapeHtml(data.transformed)+"</strong><div class='meta'>compliance: "+Math.round(data.compliance_score*100)+"% | retries: "+data.retries+"</div>";}
-}catch(e){resultEl.innerHTML="<span class='error'>Request failed: "+e.message+"</span>";}
+}catch(e){resultEl.innerHTML="<span class='error'>Request failed: "+e.message+"</span>";
 btn.disabled=false;btn.textContent="Transform";
 }
 

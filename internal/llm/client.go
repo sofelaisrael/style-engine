@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	defaultOpenAIEndpoint = "https://api.openai.com/v1/chat/completions"
+	defaultOpenAIEndpoint     = "https://api.openai.com/v1/chat/completions"
 	defaultOpenRouterEndpoint = "https://openrouter.ai/api/v1/chat/completions"
-	defaultModel = "gpt-4o-mini"
-	openRouterModel = "openai/gpt-4o-mini"
+	defaultModel              = "gpt-4o-mini"
+	openRouterModel           = "openai/gpt-4o-mini"
 )
 
 type Message struct {
@@ -22,9 +22,9 @@ type Message struct {
 }
 
 type Request struct {
-	Model    string    `json:"model"`
-	Messages []Message `json:"messages"`
-	MaxTokens int      `json:"max_tokens"`
+	Model     string    `json:"model"`
+	Messages  []Message `json:"messages"`
+	MaxTokens int       `json:"max_tokens"`
 }
 
 type Response struct {
@@ -46,7 +46,7 @@ func NewClient() *Client {
 	// 1. Check OPENROUTER_API_KEY first
 	key := os.Getenv("OPENROUTER_API_KEY")
 	isOpenRouter := key != ""
-	
+
 	if isOpenRouter {
 		// Use OpenRouter defaults
 		model := os.Getenv("STYLE_ENGINE_MODEL")
