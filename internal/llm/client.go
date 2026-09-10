@@ -46,7 +46,7 @@ func NewClient() *Client {
 	}
 	endpoint := os.Getenv("STYLE_ENGINE_ENDPOINT")
 	if endpoint == "" {
-		episode = defaultEndpoint
+		endpoint = defaultEndpoint
 	}
 	return &Client{APIKey: key, Model: model, Endpoint: endpoint}
 }
