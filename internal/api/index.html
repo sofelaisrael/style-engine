@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Engine</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0a0a;color:#e0e0e0;min-height:100vh;display:flex;justify-content:center;padding:40px 20px}
+.container{max-width:640px;width:100%}
+h1{font-size:28px;font-weight:700;margin-bottom:4px}
+h1 span{color:#ff3366}
+.sub{color:#666;margin-bottom:32px;font-size:14px}
+label{display:block;font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+textarea{width:100%;height:120px;background:#111;border:1px solid #222;border-radius:8px;padding:12px;color:#fff;font-size:14px;resize:vertical;font-family:inherit}
+textarea:focus{outline:none;border-color:#ff3366}
+.styles{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.styles button{background:#111;border:1px solid #222;color:#aaa;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .15s}
+.styles button:hover{border-color:#444;color:#fff}
+.styles button.active{border-color:#ff3366;color:#ff3366;background:#1a0a10}
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.slider-row input[type=range]{flex:1;accent-color:#ff3366}
+.slider-row .val{font-size:13px;color:#888;min-width:36px}
+button.transform{width:100%;background:#ff3366;color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
+button.transform:hover{opacity:.85}
+button.transform:disabled{opacity:.4;cursor:not-allowed}
+.result{margin-top:24px;background:#111;border:1px solid #222;border-radius:8px;padding:16px;min-height:60px;white-space:pre-wrap;font-size:14px;line-height:1.6;display:none}
+.result.show{display:block}
+.meta{margin-top:8px;font-size:12px;color:#555}
+.error{color:#ff3366}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>style<span>-engine</span></h1>
+<p class="sub">Transform text into any style. Powered by style profiles + LLM.</p>
+
+<label>Your text</label>
+<textarea id="input" placeholder="I finished the project today."></textarea>
+
+<label>Style</label>
+<div class="styles" id="styles"></div>
+
+<label>Intensity</label>
+<div class="slider-row">
+<input type="range" id="intensity" min="10" max="100" value="70">
+<span class="val" id="intensityVal">70%</span>
+</div>
+
+<button class="transform" id="btn" onclick="transform()">Transform</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<script>
+const stylesEl=document.getElementById("styles");
+const intensity=document.getElementById("intensity");
+const intensityVal=document.getElementById("intensityVal");
+const resultEl=document.getElementById("result");
+const btn=document.getElementById("btn");
+let selectedStyle="";
+
+intensity.oninput=()=>intensityVal.textContent=intensity.value+"%";
+
+fetch("/styles").then(r=>r.json()).then(d=>{
+(d.styles||[]).forEach(s=>{
+const b=document.createElement("button");
+b.textContent=s;
+b.onclick=()=>{
+selectedStyle=s;
+stylesEl.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");
+};
+stylesEl.appendChild(b);
+});
+if(d.styles&&d.styles.length){selectedStyle=d.styles[0];stylesEl.children[0].classList.add("active");}
+});
+
+async function transform(){
+const text=document.getElementById("input").value.trim();
+if(!text||!selectedStyle)return;
+btn.disabled=true;btn.textContent="Transforming...";
+resultEl.className="result show";resultEl.textContent="...";
+
+try{
+const res=await fetch("/transform",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,style:selectedStyle,intensity:intensity.value/100})});
+const data=await res.json();
+if(data.error){resultEl.innerHTML="<span class='error'>"+data.error+"</span>";}else{resultEl.innerHTML="<strong>"+escapeHtml(data.transformed)+"</strong><div class='meta'>compliance: "+Math.round(data.compliance_score*100)+"% | retries: "+data.retries+"</div>";}
+}catch(e){resultEl.innerHTML="<span class='error'>Request failed: "+e.message+"</span>";}
+btn.disabled=false;btn.textContent="Transform";
+}
+
+function escapeHtml(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+</script>
+</body>
+</html>
