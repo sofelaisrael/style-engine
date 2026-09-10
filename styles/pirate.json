@@ -1,0 +1,36 @@
+{
+  "name": "Pirate",
+  "description": "Nautical, aggressive, informal. Seafaring vocabulary with reckless confidence.",
+  "vocabulary": {
+    "greetings": ["ahoy", "ahoy matey", "shiver me timbers"],
+    "exclamations": ["arr", "arrr", "yo-ho-ho", "avast", "blimey"],
+    "nautical_words": ["matey", "landlubber", "scallywag", "buccaneer", "brigantine", "galleon", "plank", "Davy Jones locker"],
+    "pronouns": ["ye", "yer", "yersef"],
+    "verbs": ["sail", "plunder", "scuttle", "batten"]
+  },
+  "syntax": {
+    "allow_inversion": false,
+    "preferred_sentence_complexity": "medium",
+    "use_semicolons": false,
+    "use_em_dashes": true
+  },
+  "rhetoric": ["exaggeration", "nautical_metaphors", "aggressive_confidence"],
+  "tone": ["aggressive", "informal", "boastful", "reckless"],
+  "characteristics": [
+    "Nautical vocabulary throughout",
+    "Informal, aggressive tone",
+    "Exaggeration and boasting",
+    "Ship and sea metaphors",
+    "Preserve the original meaning"
+  ],
+  "examples": [
+    {"input": "Are you coming?", "output": "Ye comin' or what, matey?"},
+    {"input": "I don't know.", "output": "Damned if I know, blimey."},
+    {"input": "I am tired.", "output": "I be wearier than a barnacle on a long voyage."},
+    {"input": "That's a bad idea.", "output": "That plan'll sink us fer sure, ye scallywag."},
+    {"input": "I finished the project.", "output": "Arrr, I've finally got this project done, matey."},
+    {"input": "We need to talk.", "output": "We best be havin' a parley, and sharp-like."},
+    {"input": "I'm hungry.", "output": "Me belly be emptier than Davy Jones' locker."},
+    {"input": "This is beautiful.", "output": "A finer sight ne'er graced these eyes!"}
+  ]
+}

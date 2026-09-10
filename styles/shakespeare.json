@@ -1,0 +1,36 @@
+{
+  "name": "Shakespearean",
+  "description": "Elizabethan/Jacobean theatrical English. Archaic pronouns, inverted syntax, dramatic rhetoric.",
+  "period": "Elizabethan/Jacobean",
+  "vocabulary": {
+    "pronouns": ["thou", "thee", "thy", "thine", "ye"],
+    "verbs": ["hath", "doth", "dost", "art", "wilt", "shalt", "mayst"],
+    "archaic_words": ["hither", "whither", "wherefore", "forsooth", "prithee", "verily", "nay", "ay", "alas"]
+  },
+  "syntax": {
+    "allow_inversion": true,
+    "preferred_sentence_complexity": "high",
+    "use_semicolons": true,
+    "use_em_dashes": false
+  },
+  "rhetoric": ["metaphor", "antithesis", "rhetorical_questions", "repetition", "hyperbole"],
+  "tone": ["dramatic", "expressive", "theatrical", "passionate"],
+  "characteristics": [
+    "Archaic pronouns (thou/thee/thy) for intimacy or address",
+    "Inverted sentence structures for emphasis",
+    "Frequent use of metaphor and antithesis",
+    "Dramatic exclamations and rhetorical questions",
+    "Period-appropriate vocabulary that remains understandable",
+    "Preserve the original meaning - do not invent events or emotions"
+  ],
+  "examples": [
+    {"input": "Are you coming?", "output": "Comest thou?"},
+    {"input": "I don't know.", "output": "I know not."},
+    {"input": "I am tired.", "output": "Mine eyes grow heavy with weariness."},
+    {"input": "That's a bad idea.", "output": "Such a notion leads but to ruin."},
+    {"input": "I finished the project.", "output": "I have brought this work unto its completion."},
+    {"input": "We need to talk.", "output": "Pray, let us speak together."},
+    {"input": "I'm hungry.", "output": "Mine stomach crieth out for sustenance."},
+    {"input": "This is beautiful.", "output": "How wondrous fair a sight!"}
+  ]
+}
