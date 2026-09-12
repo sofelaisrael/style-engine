@@ -2,35 +2,35 @@
   "name": "genz",
   "description": "Gen Z internet slang with abbreviations, chaotic energy, and zero formality",
   "vocabulary": {
-    "pronouns": ["bestie", "y'all", "fam"],
-    "verbs": ["slay", "vibe", "stan", "ghosting", "no cap", "bet", "bruh", "ate that", "periodt"],
-    "archaicWords": ["deadass", "fr fr", "ong", "lowkey", "highkey", " rent free", "main character", "it's giving", "understood the assignment", "living my best life"],
-    "exclamations": ["no way!", "that's wild!", "bestie what", "i'm dead 💀", "slay!", "periodt!", "it's giving!", "i can't even"],
-    "nauticalWords": [],
-    "greetings": ["hey bestie", "yo", "ayoo", "no because", "ok so"]
+    "pronouns": ["bestie", "y'all", "fam", "sis", "gang"],
+    "verbs": ["slay", "vibe", "stan", "ghosting", "no cap", "bet", "bruh", "ate that", "periodt", "legit", "crushed", "snatched", "serving", "rent free", "copied", "cringe", "vibing"],
+    "archaic_words": ["deadass", "fr fr", "ong", "lowkey", "highkey", "main character", "it's giving", "understood the assignment", "living my best life", "slay", "bussin", "fire", "mid", "W", "L", "ratio", "based", "sus", "NPC", "delulu", "beige flag", "ick", "no cap", "literally", "obsessed", "shook"],
+    "exclamations": ["no way!", "that's wild!", "bestie what", "i'm dead 💀", "slay!", "periodt!", "it's giving!", "i can't even", "no bc fr", "i'm screaming", "not me", "im dead", "shook", "obsessed"],
+    "nautical_words": [],
+    "greetings": ["hey bestie", "yo", "ayoo", "no because", "ok so", "bro"]
   },
   "syntax": {
-    "sentenceLength": "short",
-    "preferredSentenceComplexity": "low",
-    "allowInversion": false,
-    "useSemicolons": false,
-    "useEmDashes": true
+    "allow_inversion": false,
+    "preferred_sentence_complexity": "low",
+    "use_semicolons": false,
+    "use_em_dashes": true
   },
   "tone": ["casual", "chaotic", "dramatic", "unfiltered"],
-  "example": [
-    "Original: I finished the project.\nGen Z: bestie i'm so done with this project like finally it's giving completion era",
-    "Original: I need help.\nGen Z: ok so i'm lowkey drowning here can someone pls help me i'm literally begging",
-    "Original: The meeting went well.\nGen Z: the meeting actually slayed no cap we understood the assignment fr",
-    "Original: I disagree with you.\nGen Z: respectfully bestie that's a take but it's giving wrong",
-    "Original: The food was good.\nGen Z: bestie the food ate and left no crumbs absolutely slay",
-    "Original: I'm tired.\nGen Z: i'm so dead rn like i have no energy left bestie i'm literally a zombie",
-    "Original: This is broken.\nGen Z: this is so broken it's not even funny like why is it like this",
-    "Original: Let's do it.\nGen Z: bet let's gooo it's giving main character energy periodt"
+  "rhetoric": ["hyperbole", "irony", "stream_of_consciousness"],
+  "characteristics": [
+    "Internet slang and abbreviations",
+    "Lowercase and zero formality",
+    "Chaotic energy and dramatic reactions",
+    "Emoji references and meme language"
   ],
-  "intensityRange": {
-    "subtle": 0.3,
-    "moderate": 0.6,
-    "strong": 0.8,
-    "extreme": 1.0
-  }
+  "examples": [
+    {"input": "I finished the project.", "output": "bestie i'm so done with this project like finally it's giving completion era"},
+    {"input": "I need help.", "output": "ok so i'm lowkey drowning here can someone pls help me"},
+    {"input": "The meeting went well.", "output": "the meeting actually slayed no cap we understood the assignment fr"},
+    {"input": "I disagree.", "output": "respectfully bestie that's a take but it's giving wrong"},
+    {"input": "The food was good.", "output": "bestie the food ate and left no crumbs absolutely slay"},
+    {"input": "I'm tired.", "output": "i'm so dead rn like i have no energy left bestie"},
+    {"input": "This is broken.", "output": "this is so broken it's not even funny like why is it like this"},
+    {"input": "Let's do it.", "output": "bet let's gooo it's giving main character energy periodt"}
+  ]
 }

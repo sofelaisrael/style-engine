@@ -2,35 +2,35 @@
   "name": "corporate",
   "description": "Corporate business jargon with buzzwords, vague language, and stakeholder-focused phrasing",
   "vocabulary": {
-    "pronouns": ["we", "our team", "stakeholders"],
-    "verbs": ["leverage", "synergize", "optimize", "streamline", "empower", "accelerate", "drive", "enable", "facilitate", "execute"],
-    "archaicWords": ["actionable", "scalable", "robust", "holistic", "strategic", "tactical", "cross-functional", "value-add", "low-hanging fruit", "double-click"],
-    "exclamations": ["Great question!", "Let me unpack that.", "Let's take this offline.", "I think we need to align on this.", "Can we double-click on that?"],
-    "nauticalWords": [],
-    "greetings": ["Hi team", "Hi everyone", "Good morning all", "Hey folks"]
+    "pronouns": ["we", "our team", "stakeholders", "the team", "all parties"],
+    "verbs": ["leverage", "synergize", "optimize", "streamline", "empower", "accelerate", "drive", "enable", "facilitate", "execute", "implement", "deliver", "champion", "spearhead", "orchestrate", "amplify", "quantify"],
+    "archaic_words": ["actionable", "scalable", "robust", "holistic", "strategic", "tactical", "cross-functional", "value-add", "low-hanging fruit", "double-click", "synergy", "bandwidth", "circle back", "touch base", "move the needle", "paradigm", "ecosystem", "net-net", "at scale", "pain point", "north star", "ideation", "effectively", "overarching", "comprehensive", "impactful"],
+    "exclamations": ["Great question!", "Let me unpack that.", "Let's take this offline.", "I think we need to align on this.", "Can we double-click on that?", "That's a great point.", "Let's table this for now."],
+    "nautical_words": [],
+    "greetings": ["Hi team", "Hi everyone", "Good morning all", "Hey folks", "Good afternoon team"]
   },
   "syntax": {
-    "sentenceLength": "medium",
-    "preferredSentenceComplexity": "medium",
-    "allowInversion": false,
-    "useSemicolons": false,
-    "useEmDashes": true
+    "allow_inversion": false,
+    "preferred_sentence_complexity": "medium",
+    "use_semicolons": false,
+    "use_em_dashes": true
   },
   "tone": ["professional", "vague", "enthusiastic", "bureaucratic"],
-  "example": [
-    "Original: I finished the project.\nCorporate: The project has been successfully completed and we're now in a position to leverage the outcomes across multiple workstreams.",
-    "Original: I need help.\nCorporate: I'd like to flag a resource gap that's impacting our ability to drive the initiative forward. Can we align on a path forward?",
-    "Original: The meeting went well.\nCorporate: The sync was productive and we've achieved good alignment with all key stakeholders. Next steps are clear and actionable.",
-    "Original: I disagree with you.\nCorporate: I think there's an opportunity to pressure-test that assumption. Let me offer a different lens on the problem.",
-    "Original: The food was good.\nCorporate: The catering was well-received and hit the mark for the audience. We should consider scaling this for future events.",
-    "Original: I'm tired.\nCorporate: I'm at a point where I need to be mindful of energy management to sustain peak performance.",
-    "Original: This is broken.\nCorporate: We've identified a gap in the current process that's creating friction. I'd like to propose a path to resolution.",
-    "Original: Let's do it.\nCorporate: I'm aligned on the approach. Let's move to execution and I'll ensure we have the right resources tagged in."
+  "rhetoric": ["euphemism", "passive_voice", "nominalization"],
+  "characteristics": [
+    "Heavy use of buzzwords and jargon",
+    "Vague language that sounds important",
+    "Passive voice to distance responsibility",
+    "Stakeholder-focused phrasing"
   ],
-  "intensityRange": {
-    "subtle": 0.3,
-    "moderate": 0.6,
-    "strong": 0.8,
-    "extreme": 1.0
-  }
+  "examples": [
+    {"input": "I finished the project.", "output": "The project has been successfully completed and we're now in a position to leverage the outcomes across multiple workstreams."},
+    {"input": "I need help.", "output": "I'd like to flag a resource gap that's impacting our ability to drive the initiative forward."},
+    {"input": "The meeting went well.", "output": "The sync was productive and we've achieved good alignment with all key stakeholders."},
+    {"input": "I disagree.", "output": "I think there's an opportunity to pressure-test that assumption."},
+    {"input": "The food was good.", "output": "The catering was well-received and hit the mark for the audience."},
+    {"input": "I'm tired.", "output": "I'm at a point where I need to be mindful of energy management."},
+    {"input": "This is broken.", "output": "We've identified a gap in the current process that's creating friction."},
+    {"input": "Let's do it.", "output": "I'm aligned on the approach. Let's move to execution."}
+  ]
 }

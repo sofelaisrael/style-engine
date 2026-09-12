@@ -3,34 +3,34 @@
   "description": "Formal Victorian-era prose with elaborate vocabulary, complex sentence structures, and moral undertones",
   "vocabulary": {
     "pronouns": ["one", "oneself", "whom", "thy", "mine"],
-    "verbs": ["endeavoured", "proclaimed", "exclaimed", "pondered", "contemplated", "perceived", "observed", "declared", "protested", "beseeched"],
-    "archaicWords": ["whilst", "amongst", "unto", "herein", "therein", "whereby", "henceforth", "notwithstanding", "aforementioned", "indubitably", "verily", "truly", "indeed", "certainly", "assuredly"],
+    "verbs": ["endeavoured", "proclaimed", "exclaimed", "pondered", "contemplated", "perceived", "observed", "declared", "protested", "beseeched", "implored", "ventured", "solicited", "consumed"],
+    "archaic_words": ["whilst", "amongst", "unto", "herein", "therein", "whereby", "henceforth", "notwithstanding", "aforementioned", "indubitably", "verily", "truly", "indeed", "certainly", "assuredly", "resplendent", "fervent", "congenial", "consternation", "trepidation", "procure", "thoroughfare", "commendable", "extensive"],
     "exclamations": ["Good heavens!", "My dear!", "How extraordinary!", "How very peculiar!", "I dare say!", "Goodness gracious!", "Upon my word!", "Heavens above!"],
-    "nauticalWords": [],
+    "nautical_words": [],
     "greetings": ["Good day", "My dear fellow", "My dear sir", "I trust", "Allow me"]
   },
   "syntax": {
-    "sentenceLength": "long",
-    "preferredSentenceComplexity": "high",
-    "allowInversion": true,
-    "useSemicolons": true,
-    "useEmDashes": true
+    "allow_inversion": true,
+    "preferred_sentence_complexity": "high",
+    "use_semicolons": true,
+    "use_em_dashes": true
   },
   "tone": ["formal", "elaborate", "restrained", "moral"],
-  "example": [
-    "Original: I went to the store.\nVictorian: I endeavoured, with no inconsiderable trepidation, to procure the necessary provisions from the establishment.",
-    "Original: It was raining outside.\nVictorian: The heavens opened with such vigour as to render the thoroughfares quite impassable, a circumstance which I perceived with no small degree of consternation.",
-    "Original: I finished the project.\nVictorian: I have, at considerable length and with the most assiduous attention to detail, brought this undertaking to its ultimate consummation.",
-    "Original: The meeting went well.\nVictorian: The assembly proved itself to be of a most harmonious character, and I dare say that the outcome was indubitably favourable to all parties concerned.",
-    "Original: I need help with this.\nVictorian: I find myself constrained to solicit your esteemed assistance in this matter of some considerable import, and I beseech you to lend me the benefit of your considerable expertise.",
-    "Original: The food was delicious.\nVictorian: The repast proved to be of such exquisite quality as to merit the most fulsome praise; indeed, I have rarely encountered refreshments of a more commendable nature.",
-    "Original: I disagree with you.\nVictorian: I feel compelled, with the most profound respect for your person, to venture the opinion that my own apprehension of the matter differs in no inconsiderable degree from that which you have so articulately expressed.",
-    "Original: The weather is nice today.\nVictorian: We are favoured, on this most clement of days, with meteorological conditions of a truly congenial character; the very firmament seems to smile upon our endeavours."
+  "rhetoric": ["metaphor", "hyperbole", "repetition"],
+  "characteristics": [
+    "Elaborate vocabulary with Latinate roots",
+    "Long complex sentences with subordinate clauses",
+    "Formal address and restrained emotion",
+    "Moral undertones and propriety"
   ],
-  "intensityRange": {
-    "subtle": 0.3,
-    "moderate": 0.6,
-    "strong": 0.8,
-    "extreme": 1.0
-  }
+  "examples": [
+    {"input": "I finished the project.", "output": "I have brought this work unto its completion this day."},
+    {"input": "I went to the store.", "output": "I endeavoured, with no inconsiderable trepidation, to procure the necessary provisions from the establishment."},
+    {"input": "It was raining.", "output": "The heavens opened with such vigour as to render the thoroughfares quite impassable."},
+    {"input": "The meeting went well.", "output": "The assembly proved itself to be of a most harmonious character."},
+    {"input": "I need help.", "output": "I find myself constrained to solicit your esteemed assistance."},
+    {"input": "The food was good.", "output": "The repast proved to be of such exquisite quality as to merit the most fulsome praise."},
+    {"input": "I disagree.", "output": "I feel compelled to venture the opinion that my apprehension differs in no inconsiderable degree."},
+    {"input": "The weather is nice.", "output": "We are favoured with meteorological conditions of a truly congenial character."}
+  ]
 }
