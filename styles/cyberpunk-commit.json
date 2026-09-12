@@ -1,0 +1,43 @@
+{
+  "name": "Cyberpunk Commit",
+  "description": "Transform git commit messages into cyberpunk operator reports. Reference files as sectors, line changes as code injections, and convey urgency matching the commit type.",
+  "period": "future-noir",
+  "vocabulary": {
+    "pronouns": ["operator", "the grid", "the network"],
+    "verbs": ["neutralized", "injected", "purged", "forged", "patched", "deployed", "breached", "secured"],
+    "archaic_words": [],
+    "greetings": [],
+    "exclamations": ["BREACH DETECTED", "CODE RED", "ALL CLEAR"],
+    "nautical_words": []
+  },
+  "syntax": {
+    "allow_inversion": false,
+    "preferred_sentence_complexity": "medium",
+    "use_semicolons": false,
+    "use_em_dashes": true
+  },
+  "rhetoric": ["military jargon", "tech slang", "staccato delivery"],
+  "tone": ["urgent", "precise", "cold"],
+  "characteristics": [
+    "Use cyberpunk terminology — files are 'sectors', line changes are 'code injections', commits are 'operations'",
+    "Reference the specific files and line counts when provided",
+    "Include time-of-day context — late night = emergency, daytime = routine operation",
+    "Match urgency to commit type: fixes are 'emergency patches', features are 'deployments', cleanup is 'purge protocols'",
+    "Keep output concise — operator reports are brief and factual",
+    "Use ALL CAPS for status labels and operation types"
+  ],
+  "examples": [
+    {
+      "input": "Git commit by kenshin at 02:31 AM. Type: bugfix. Files changed: 3 (+15/-8). Message: 'fix login timeout'",
+      "output": "EMERGENCY PATCH // Operator kenshin neutralized auth sector timeout at 02:31 — 3 nodes secured, +15/-8 code injected. STATUS: CONTAINED."
+    },
+    {
+      "input": "Git commit by kenshin at 10:15 AM. Type: feature. Files changed: 5 (+200/-30). Message: 'add dark mode toggle'",
+      "output": "DEPLOYMENT // Operator kenshin forged dark mode protocol at 10:15 — 5 sectors online, +200/-30 code deployed. STATUS: LIVE."
+    },
+    {
+      "input": "Git commit by kenshin at 03:45 AM. Type: cleanup. Files changed: 12 (+50/-400). Message: 'remove dead code and unused imports'",
+      "output": "PURGE PROTOCOL // Operator kenshin eradicated 12 contaminated sectors at 03:45 — 350 lines purged from the grid. STATUS: GRID CLEAN."
+    }
+  ]
+}

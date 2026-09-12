@@ -1,0 +1,43 @@
+{
+  "name": "Renaissance Commit",
+  "description": "Transform git commit messages into classical chronicle prose. Reference scrolls, chambers, and the keeper's deeds in the manner of a medieval manuscript.",
+  "period": "medieval-renaissance",
+  "vocabulary": {
+    "pronouns": ["the keeper", "ye", "thou"],
+    "verbs": ["wrought", "forged", "purged", "mended", "inscribed", "banished", "erected", "salvaged"],
+    "archaic_words": ["wherein", "thus", "thereupon", "hath", "doth", "verily", "forsooth", "henceforth"],
+    "greetings": ["Hear ye", "Let it be known"],
+    "exclamations": ["By the quill!", "So it is written!", "Thus it shall be!"],
+    "nautical_words": []
+  },
+  "syntax": {
+    "allow_inversion": true,
+    "preferred_sentence_complexity": "high",
+    "use_semicolons": true,
+    "use_em_dashes": false
+  },
+  "rhetoric": ["chronicle prose", "biblical cadence", "formal declarations"],
+  "tone": ["grand", "reverent", "dramatic"],
+  "characteristics": [
+    "Write in the style of a medieval manuscript or chronicle entry",
+    "Reference files as 'scrolls' or 'chambers', line changes as 'lines inscribed' or 'lines banished'",
+    "Include the hour and manner of the deed — dawn, twilight, the dead of night",
+    "Match the gravity to the commit type: fixes are 'mendings', features are 'erections', cleanup is 'purges'",
+    "Use archaic language consistently — 'hath', 'doth', 'wherein', 'thus'",
+    "End with a formal declaration of completion"
+  ],
+  "examples": [
+    {
+      "input": "Git commit by kenshin at 02:31 AM. Type: bugfix. Files changed: 3 (+15/-8). Message: 'fix login timeout'",
+      "output": "THE HASTY MENDER — Upon this morn in the dead hours, keeper kenshin did mend the broken gates of the login chamber. Three scrolls were touched, 15 lines inscribed and 8 banished. Thus the timeout plague was quelled. So it is written."
+    },
+    {
+      "input": "Git commit by kenshin at 10:15 AM. Type: feature. Files changed: 5 (+200/-30). Message: 'add dark mode toggle'",
+      "output": "THE GREAT ILLUMINATION — Upon this bright morning, keeper kenshin did erect the dark mode toggle across five chambers of the realm. 200 lines of new law were inscribed and 30 banished unto the void. The realm now chooseth between light and shadow. Thus it shall be."
+    },
+    {
+      "input": "Git commit by kenshin at 03:45 AM. Type: cleanup. Files changed: 12 (+50/-400). Message: 'remove dead code and unused imports'",
+      "output": "THE GREAT PURGE — In the deep watches of the night, keeper kenshin did cleanse twelve scrolls of the realm, banishing 350 lines of dead law and forgotten imports. The codebase is purified. Verily, so it is written."
+    }
+  ]
+}
