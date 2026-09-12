@@ -31,6 +31,13 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
+func writeJSON(w http.ResponseWriter, v interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	data, _ := json.MarshalIndent(v, "", "  ")
+	w.Write(data)
+	w.Write([]byte("\n"))
+}
+
 func HandleTransform(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		writeError(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -95,8 +102,7 @@ func HandleTransform(w http.ResponseWriter, r *http.Request) {
 		Retries:     retries,
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
+	writeJSON(w, resp)
 }
 
 func HandleListStyles(w http.ResponseWriter, r *http.Request) {
@@ -105,8 +111,7 @@ func HandleListStyles(w http.ResponseWriter, r *http.Request) {
 		writeError(w, "could not list styles", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string][]string{"styles": names})
+	writeJSON(w, map[string][]string{"styles": names})
 }
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
@@ -114,8 +119,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		writeError(w, "method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{
+	writeJSON(w, map[string]string{
 		"service": "style-engine",
 		"version": "0.1.0",
 		"usage":   "POST /transform with {text, style, intensity}",
@@ -125,5 +129,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 func writeError(w http.ResponseWriter, msg string, code int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	json.NewEncoder(w).Encode(ErrorResponse{Error: msg})
+	data, _ := json.MarshalIndent(ErrorResponse{Error: msg}, "", "  ")
+	w.Write(data)
+	w.Write([]byte("\n"))
 }
