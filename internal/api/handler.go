@@ -119,11 +119,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		writeError(w, "method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	writeJSON(w, map[string]string{
-		"service": "style-engine",
-		"version": "0.1.0",
-		"usage":   "POST /transform with {text, style, intensity}",
-	})
+	http.ServeFile(w, r, "internal/api/index.html")
 }
 
 func writeError(w http.ResponseWriter, msg string, code int) {
