@@ -87,14 +87,18 @@ func NewClient() *Client {
 	}
 }
 
-func (c *Client) Transform(systemPrompt, userPrompt string) (string, error) {
+func (c *Client) Transform(systemPrompt, userPrompt string, maxTokens ...int) (string, error) {
 	if c.APIKey == "" {
 		return "", fmt.Errorf("no API key set - export OPENROUTER_API_KEY, OPENAI_API_KEY, or STYLE_ENGINE_API_KEY")
 	}
 
+	tokens := 1024
+	if len(maxTokens) > 0 && maxTokens[0] > 0 {
+		tokens = maxTokens[0]
+	}
 	reqBody := Request{
 		Model:     c.Model,
-		MaxTokens: 1024,
+		MaxTokens: tokens,
 		Messages: []Message{
 			{Role: "system", Content: systemPrompt},
 			{Role: "user", Content: userPrompt},

@@ -13,9 +13,16 @@ func Score(output string, profile *styles.Profile) float64 {
 	score := 0.0
 	weights := 0.0
 
+	wordCount := len(strings.Fields(output))
+	shortMode := wordCount <= 30
+
+	vocabWeight := 1.5
+	if !shortMode {
+		vocabWeight = 3.0
+	}
 	vocabScore := scoreVocabulary(outputLower, profile)
-	score += vocabScore * 3.0
-	weights += 3.0
+	score += vocabScore * vocabWeight
+	weights += vocabWeight
 
 	toneScore := scoreTone(outputLower, profile)
 	score += toneScore * 2.0
@@ -203,6 +210,10 @@ func scoreStructure(output string, profile *styles.Profile) float64 {
 func scoreLength(output string, profile *styles.Profile) float64 {
 	words := strings.Fields(output)
 	wordCount := len(words)
+
+	if wordCount <= 5 {
+		return 0.8
+	}
 
 	switch profile.Syntax.PreferredSentenceComplexity {
 	case "high":

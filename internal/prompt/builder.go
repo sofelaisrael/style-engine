@@ -7,7 +7,7 @@ import (
 	"github.com/sofelaisrael/style-engine/internal/styles"
 )
 
-func BuildSystemPrompt(profile *styles.Profile, intensity float64) string {
+func BuildSystemPrompt(profile *styles.Profile, intensity float64, maxWords int) string {
 	var b strings.Builder
 
 	b.WriteString("You are a text transformation engine.\n\n")
@@ -56,6 +56,11 @@ func BuildSystemPrompt(profile *styles.Profile, intensity float64) string {
 	b.WriteString("- Preserve the original meaning exactly\n")
 	b.WriteString("- Do not invent events, emotions, or details not in the original\n")
 	b.WriteString("- Do not turn a simple sentence into a completely different story\n")
+	if maxWords > 0 {
+		b.WriteString(fmt.Sprintf("- HARD LIMIT: Output MUST be %d words or fewer. This is a strict constraint. Violating it is a failure.\n", maxWords))
+	} else {
+		b.WriteString("- Match the output length to the input. Do NOT expand short text into long prose.\n")
+	}
 	b.WriteString("- Return ONLY the transformed text, nothing else\n")
 	b.WriteString("- No explanations, no quotes around the output, just the transformed text\n")
 
@@ -66,7 +71,7 @@ func BuildUserPrompt(text string) string {
 	return fmt.Sprintf("Transform this text:\n\n\"%s\"", text)
 }
 
-func BuildRetryPrompt(original, previousOutput string, score float64, profile *styles.Profile) string {
+func BuildRetryPrompt(original, previousOutput string, score float64, profile *styles.Profile, maxWords int) string {
 	var b strings.Builder
 
 	b.WriteString(fmt.Sprintf("The previous output scored %.0f%% compliance. Improve it.\n\n", score*100))
@@ -92,11 +97,14 @@ func BuildRetryPrompt(original, previousOutput string, score float64, profile *s
 		b.WriteString(fmt.Sprintf("- Make the tone more %s\n", strings.Join(profile.Tone, ", ")))
 	}
 
-	if profile.Syntax.PreferredSentenceComplexity == "high" && len(strings.Fields(previousOutput)) < 8 {
+	if profile.Syntax.PreferredSentenceComplexity == "high" && len(strings.Fields(previousOutput)) < 8 && len(strings.Fields(original)) >= 8 {
 		b.WriteString("- Use longer, more complex sentence structures\n")
 	}
 
 	b.WriteString(fmt.Sprintf("\nOriginal text: \"%s\"\n", original))
+	if maxWords > 0 {
+		b.WriteString(fmt.Sprintf("HARD LIMIT: Output must be %d words or fewer.\n", maxWords))
+	}
 	b.WriteString("\nReturn ONLY the improved transformed text.")
 
 	return b.String()

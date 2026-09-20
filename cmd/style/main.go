@@ -62,7 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	systemPrompt := prompt.BuildSystemPrompt(profile, *intensityFlag)
+	systemPrompt := prompt.BuildSystemPrompt(profile, *intensityFlag, 0)
 	userPrompt := prompt.BuildUserPrompt(text)
 
 	client := llm.NewClient()

@@ -16,6 +16,7 @@ type TransformRequest struct {
 	Text      string  `json:"text"`
 	Style     string  `json:"style"`
 	Intensity float64 `json:"intensity"`
+	MaxWords  int     `json:"max_words,omitempty"`
 }
 
 type TransformResponse struct {
@@ -69,15 +70,25 @@ func HandleTransform(w http.ResponseWriter, r *http.Request) {
 	}
 
 	client := llm.NewClient()
-	systemPrompt := prompt.BuildSystemPrompt(profile, req.Intensity)
+	systemPrompt := prompt.BuildSystemPrompt(profile, req.Intensity, req.MaxWords)
 	userPrompt := prompt.BuildUserPrompt(req.Text)
 
 	var result string
 	var score float64
 	var retries int
 
+	inputWords := len(strings.Fields(req.Text))
+	threshold := 0.6
+	if inputWords <= 30 {
+		threshold = 0.35
+	}
+
 	for attempt := 0; attempt < 3; attempt++ {
-		result, err = client.Transform(systemPrompt, userPrompt)
+		llmMaxTokens := 1024
+		if req.MaxWords > 0 {
+			llmMaxTokens = req.MaxWords * 2
+		}
+		result, err = client.Transform(systemPrompt, userPrompt, llmMaxTokens)
 		if err != nil {
 			writeError(w, fmt.Sprintf("LLM error: %v", err), http.StatusInternalServerError)
 			return
@@ -86,11 +97,11 @@ func HandleTransform(w http.ResponseWriter, r *http.Request) {
 		score = compliance.Score(result, profile)
 		retries = attempt
 
-		if score >= 0.6 {
+		if score >= threshold {
 			break
 		}
 
-		userPrompt = prompt.BuildRetryPrompt(req.Text, result, score, profile)
+		userPrompt = prompt.BuildRetryPrompt(req.Text, result, score, profile, req.MaxWords)
 	}
 
 	resp := TransformResponse{
