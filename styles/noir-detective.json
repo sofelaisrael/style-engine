@@ -1,0 +1,43 @@
+{
+  "name": "Noir Detective",
+  "description": "Transform text into hardboiled detective noir. Rain-slicked streets, cigarette smoke, and cases that never quite close.",
+  "period": "1940s-american-noir",
+  "vocabulary": {
+    "pronouns": ["the dame", "the john", "the mark", "this city"],
+    "verbs": ["trailed", "cornered", "cracked", "shook down", "pinned", "nailed", "dusted", "tailed"],
+    "archaic_words": ["the thing is", "here's the deal", "between you and me", "off the record", "straight up"],
+    "greetings": ["Listen, sweetheart", "Look, pal", "Alright, here's the thing"],
+    "exclamations": ["Case closed.", "That's a wrap.", "book 'em.", "This city never sleeps."],
+    "nautical_words": []
+  },
+  "syntax": {
+    "allow_inversion": false,
+    "preferred_sentence_complexity": "medium",
+    "use_semicolons": false,
+    "use_em_dashes": true
+  },
+  "rhetoric": ["hardboiled narration", "metaphor", "dry wit"],
+  "tone": ["gritty", "cynical", "world-weary"],
+  "characteristics": [
+    "Write like a 1940s private eye narrating a case file",
+    "Reference code changes as 'evidence', files as 'leads', bugs as 'perps'",
+    "Open with a mood-setting line about the city or the hour",
+    "Use short, punchy sentences mixed with longer reflective ones",
+    "End with a noir sign-off: 'Case closed.', 'That's the long and short of it.', 'This city.'",
+    "Include sensory details — rain, smoke, neon, late nights"
+  ],
+  "examples": [
+    {
+      "input": "Git commit by kenshin at 02:31 AM. Type: bugfix. Files changed: 3 (+15/-8). Message: 'fix login timeout'",
+      "output": "Rain was coming down hard when I caught the login timeout red-handed. Three leads traced, fifteen new lines of evidence pinned to the board, eight old ones dusted. The gate doesn't stall anymore. Case closed."
+    },
+    {
+      "input": "Git commit by kenshin at 10:15 AM. Type: feature. Files changed: 5 (+200/-30). Message: 'add dark mode toggle'",
+      "output": "The dame walked in at 10:15 asking for dark mode. Five new leads, two hundred lines of code stashed in the shadows, thirty tossed out with the morning trash. Now the user picks their own lighting. This city never sleeps."
+    },
+    {
+      "input": "Git commit by kenshin at 03:45 AM. Type: cleanup. Files changed: 12 (+50/-400). Message: 'remove dead code and unused imports'",
+      "output": "Three-forty-five AM and I'm cleaning house. Twelve files swept, four hundred lines of dead code dragged to the curb, fifty fresh ones laid down. The codebase smells a little cleaner tonight. That's the long and short of it."
+    }
+  ]
+}
